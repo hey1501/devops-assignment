@@ -157,6 +157,14 @@ app_dev:
     MYSQL_USER: wordpress
 
     MYSQL_PASSWORD: wordpress
+    
+    WORDPRESS_DB_HOST: wp_db:3306
+    
+    WORDPRESS_DB_USER: wordpress
+    
+    WORDPRESS_DB_PASSWORD: wordpress
+    
+    WORDPRESS_DB_NAME: wordpress
 
 # 9. Run this command to build docker compose file :
 
