@@ -13,7 +13,7 @@ Dockerizing a WordPress application might be helpful for testing or developing n
    Setup development environment :
 1. Now let’s see what containers we need to build the environment :
     1.wordpress with Apache server installed
-    2.Mysqlserver \n
+    2.Mysqlserver 
 2. Here is our project structure :
     1. ---- Dockerfile
     2. ----docker-compose.yml
