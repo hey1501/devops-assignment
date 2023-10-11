@@ -11,106 +11,77 @@ Dockerizing a WordPress application might be helpful for testing or developing n
    2. Docker Compose
 
    Setup development environment :
-
-1. Download wordpress zip file from official website .
-2. Unzip the wordpress file
-3. Now let’s see what containers we need to build the environment :
-    1.Ubuntu with Apache server installed
+1. Now let’s see what containers we need to build the environment :
+    1.wordpress with Apache server installed
     2.Mysqlserver
-4. Here is our project structure :
-    1. ---wordpress/
-    2. ---- Dockerfile
-    3. --- config/wdpress.conf
-    4. ----docker-compose.yml
-    5. --- .env
+2. Here is our project structure :
+    1. ---- Dockerfile
+    2. ----docker-compose.yml
+   
 
 
-5 .Lets Make the Dockerfile :
-FROM ubuntu:18.04
-RUN \
-  sed -i 's/# \(.*multiverse$\)/\1/g' /etc/apt/sources.list && \
-  apt-get update && \
-  apt-get -y upgrade && \
-  apt-get install -y build-essential && \
-  apt-get install -y software-properties-common && \
-  apt-get install -y byobu curl git htop man unzip vim wget && \
-  rm -rf /var/lib/apt/lists/*
-ARG DEBIAN_FRONTEND=noninteractive
-RUN apt-get update
-RUN apt-get upgrade
-RUN apt-get install -y apache2 libapache2-mod-php
-RUN apt install -y php unzip
-RUN apt-get install -y php-cli php-common php-mbstring php-gd php-intl php-xml php-mysql php-zip php-curl php-xmlrpc
-COPY . /var/www/html:rw
-COPY ./config/wdpress.conf /etc/apache2/sites-available/000-default.conf
-RUN a2enmod rewrite
-# Define working directory.
-WORKDIR /var/www/html
-EXPOSE 80
-CMD apachectl -D FOREGROUND
+3 .Lets Make the Dockerfile :
+FROM wordpress:latest
+
+LABEL maintainer="abhi15@gmail.com"
+
+ARG DB_NAME=mywordpressdb
+ARG DB_USER=mywordpressuser
+ARG DB_PASSWORD=mysecretpassword
+ARG DB_HOST=db
+
+ENV WORDPRESS_DB_NAME=${DB_NAME}
+ENV WORDPRESS_DB_USER=${DB_USER}
+ENV WORDPRESS_DB_PASSWORD=${DB_PASSWORD}
+ENV WORDPRESS_DB_HOST=${DB_HOST}
+
+RUN apt-get update \
+    && apt-get install -y \
+        # Additional packages if needed \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+CMD ["apache2-foreground"]
 
 
-6 . Setup apache configuration file /config/wdpress.conf
- <VirtualHost *:80>
-	ServerAdmin webmaster@localhost
-	DocumentRoot /var/www/html
-	ErrorLog ${APACHE_LOG_DIR}/error.log
-	CustomLog ${APACHE_LOG_DIR}/access.log combined
-    <Directory /var/www/html >
-        AllowOverride All
-    </Directory>
-</VirtualHost>
 
-7. Run the command to build Dockerfile
+4. Run the command to build Dockerfile
    docker build -t wp:1 .
 
-8. Define our services in Docker-compose.yml
-   version: '2'
+5. Define our services in Docker-compose.yml
+   version: '3'
 services:
- 
-  mysql:
-    image: mysql:5.7
-    env_file:
-      - .env
+  wordpress:
+    build: .
+    ports:
+      - "80:80"
+    environment:
+      MYSQL_DATABASE: mywordpressdb
+      MYSQL_USER: mywordpressuser
+      MYSQL_PASSWORD: mysecretpassword
+      MYSQL_HOST: db
     volumes:
-      - ./.docker/data/mysql/:/var/lib/mysql
-      - ./.docker/logs/mysql/:/var/log/mysql
-    ports:
-      - "3306:3306"
-    container_name: wp_mysql
-  
-  phpmyadmin:
-    image: phpmyadmin/phpmyadmin
-    ports:
-      -  8080:80
-    env_file:
-      - .env
-    environment:
-      PMA_HOST: mysql
-      VIRTUAL_HOST: phpmyadmin.wp.local  
-    container_name: wp_phpmyadmin
-  app_dev:
-    container_name: wp_app
-    build: ./wordpress/
-    environment:
-      - VIRTUAL_HOST=app.wp.local
-    volumes : 
-      - ./wordpress:/var/www/html:rw
-    restart: always
-    ports:
-      - 80:80
-    links:
-      - "mysql:wp_mysql"
+      - wordpress_data:/var/www/html
 
-8. Setup the environment variable for the database connection
-      MYSQL_ROOT_PASSWORD: wdpress
-      MYSQL_DATABASE: wordpress
-      MYSQL_USER: wordpress
-      MYSQL_PASSWORD: wordpress
-9. Run this command to build docker compose file
+  db:
+    image: mysql:latest
+    environment:
+      MYSQL_DATABASE: mywordpressdb
+      MYSQL_USER: mywordpressuser
+      MYSQL_PASSWORD: mysecretpassword
+      MYSQL_ROOT_PASSWORD: myrootpassword
+    volumes:
+      - db_data:/var/lib/mysql
+
+volumes:
+  wordpress_data:
+  db_data:
+
+6. Run this command to build docker compose file
     docker-compose up --build
-
-4
+7. Go to the browser :
+   http://18.188.0.66:80
+   
 
     
 
