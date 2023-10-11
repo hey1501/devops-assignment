@@ -15,6 +15,7 @@ Setup development environment :
 Ubuntu with Apache server installed
  - MySQL server
  - PhpMyAdmin
+
 4 — Here is our project structure :
    -- wordpress/
    -- /Dockerfile
