@@ -18,9 +18,13 @@ Ubuntu with Apache server installed
 
 4 — Here is our project structure :
    -- wordpress/
+
    -- /Dockerfile
+
    -- /config/wdpress.conf
+
    -- docker-compose.yml
+
    -- .env
 
 5 — Let’s make our Dockerfile
