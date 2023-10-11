@@ -96,5 +96,6 @@ volumes:
 # 7. Go to the browser :
 
     http://18.188.0.66:80
+    
 
 
