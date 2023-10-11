@@ -2,7 +2,9 @@
 
 ## Emailid:- singhabhimanyukumar591@gmail.com
 #
-Dockerize a WordPress application with Dockefile and Docker-compose file and Database Optimization Wordpress : WordPress is a free and open-source content management system written in PHP and paired with a MySQL or MariaDB database. Features include a plugin architecture and a template system, referred to within WordPress as Theme. Dockerizing a WordPress application might be helpful for testing or developing new themes, and plugins. In this article we will make the complete ready to use setup.
+# Dockerize a WordPress application with Dockefile and Docker-compose file and Database Optimization Wordpress :
+
+WordPress is a free and open-source content management system written in PHP and paired with a MySQL or MariaDB database. Features include a plugin architecture and a template system, referred to within WordPress as Theme. Dockerizing a WordPress application might be helpful for testing or developing new themes, and plugins. In this article we will make the complete ready to use setup.
 
 1. Prerequisite :
     - Docker
