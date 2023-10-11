@@ -1,3 +1,6 @@
+NAME : Abhimanyu kumar singh
+Email id. - singhabhimanyukumar591@gmail.com
+
 Dockerize a WordPress application with Dockefile and Docker-compose file and Database Optimization 
 Wordpress :
 WordPress is a free and open-source content management system written in PHP and paired with a MySQL or MariaDB database. Features include a plugin architecture and a template system, referred to within WordPress as Theme.
@@ -107,9 +110,9 @@ services:
 9. Run this command to build docker compose file
     docker-compose up --build
 
-10.Once the build is done successfully and all containers are up visit :
-    18.191.71.240 ------> wordpress application 
-    18.191.71.240:8080 ---> phpmyadmin
+4
+
+    
 
 
 
