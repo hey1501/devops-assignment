@@ -158,7 +158,7 @@ app_dev:
 
     MYSQL_PASSWORD: wordpress
     
-    WORDPRESS_DB_HOST: wp_db:3306
+    WORDPRESS_DB_HOST: wp_db
     
     WORDPRESS_DB_USER: wordpress
     
